@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Kasvikauppa</title>
+</head>
+
+<body>
+  <h1>
+    Kasvikauppa
+  </h1>
+  <h2>
+    Etusivu
+  </h2>
+  <img src="/static/flower_test.png"
+        width="500"
+        height="450" />
+    <br>
+  <a href="{{url_for('form')}}">Kirjaudu</a>
+  <p>{{ message }}</p>
+  <ul>
+    {% for item in items %}
+    <li>{{item}}
+    {% endfor %}
+  </ul>
+</body>
+
+</html>
