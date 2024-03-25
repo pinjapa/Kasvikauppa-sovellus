@@ -17,7 +17,9 @@
         width="500"
         height="450" />
     <br>
-  <a href="{{url_for('index_messages')}}">Anna palautetta</a>
+  <a href="/messages">Anna palautetta</a>
+  <br>
+  <a href="/all-plants">Kaikki kasvit</a>
   <p>{{ message }}</p>
   <ul>
     {% for item in items %}

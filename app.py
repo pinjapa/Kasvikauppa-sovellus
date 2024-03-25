@@ -32,3 +32,9 @@ def send():
     db.session.commit()
     return redirect("/messages")
 
+@app.route("/all-plants")
+def all_plants():
+    result = db.session.execute(text("SELECT name, price FROM plants"))
+    plants = result.fetchall()
+    return render_template("all_plants.html", count=len(plants), plants=plants)
+
