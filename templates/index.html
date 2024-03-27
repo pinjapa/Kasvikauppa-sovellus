@@ -13,13 +13,24 @@
   <h2>
     Etusivu
   </h2>
+  
   <img src="/static/flower_test.png"
         width="500"
         height="450" />
     <br>
+  {% if session.username %}
+  <p>Olet kirjautunut nimellä {{ session.username }}</p>
+  <a href="/logout">Kirjaudu ulos</a>
+  <br>
+  {% endif %}
+  <a href="/login_page">Profiili</a>
+  <br>
   <a href="/messages">Anna palautetta</a>
   <br>
   <a href="/all-plants">Kaikki kasvit</a>
+  <br>
+  
+  <br>   
   <p>{{ message }}</p>
   <ul>
     {% for item in items %}
