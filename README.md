@@ -17,8 +17,11 @@ Tavoitteena on vielä:
 
 Sovelluksen käynnistäminen:
 Koneellesi täytyy luoda tiedosto .env samana kansioon kuin kloonattu repositorio
+
 Sinne tarvitsee:
+
 DATABASE_URL=<tietokannan-paikallinen-osoite>
+
 SECRET_KEY=<salainen-avain>
 
 Asenna ja aktivoi virtuaaliympäristö komennoilla
