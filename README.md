@@ -14,3 +14,14 @@ Tavoitteena on vielä:
 - Sivun vierailija voi kirjautuneena antaa palautetta kasvikaupasta ja kasveista
 - Kasveja voi hakea eri suodattimilla esim. hinta ja saatavuus
 - Kaupan omistajalla on laajat oikeudet muokata kasvien tietoja
+
+Sovelluksen käynnistäminen:
+Koneellesi täytyy luoda tiedosto .env samana kansioon kuin kloonattu repositorio
+Sinne tarvitsee:
+DATABASE_URL=<tietokannan-paikallinen-osoite>
+SECRET_KEY=<salainen-avain>
+
+Asenna ja aktivoi virtuaaliympäristö komennoilla
+  - $ python3 -m venv venv
+  - $ source venv/bin/activate
+  - $ pip install -r ./requirements.txt
