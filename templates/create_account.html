@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Luo käytäjä</title>
+</head>
+
+<body>
+
+  <h1>Kirjaudu sisäään</h1>
+  <form action="/create-account" method="POST">
+
+  <p>Käyttäjänimi:<br>
+  <input type="text" name="username"></p>
+
+  <p>Salasana:<br>
+  <input type="password1" name="password1"></p>
+
+  <p>Salasana uudestaan:<br>
+  <input type="password2" name="password2"></p>
+  <p>
+    Käytättäjänimen tulee olla vähintään 6 merkkiä
+    <br>
+    Salasanan tulee olla vähintään 8 merkkiä
+  </p>
+
+  <input type="submit" value="Luo käyttäjä">
+  </form>
+  
+  <a href="/">Etusivulle</a>
+</body>
+
+</html>
