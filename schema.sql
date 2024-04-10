@@ -1,11 +1,14 @@
+DROP TABLE IF EXISTS messages CASCADE;
+DROP TABLE IF EXISTS plants CASCADE;
+DROP TABLE IF EXISTS accounts CASCADE;
 
 CREATE TABLE messages (
-    id INTEGER PRIMARY KEY, 
-    content TEXT
+    id SERIAL PRIMARY KEY,
+    content TEXT NOT NULL
 );
 
 CREATE TABLE plants (
-    id INTEGER PRIMARY KEY, 
+    id SERIAL PRIMARY KEY, 
     name TEXT,
     price INTEGER
 );
@@ -13,5 +16,10 @@ CREATE TABLE plants (
 CREATE TABLE accounts (
     id SERIAL PRIMARY KEY,
     username TEXT UNIQUE,
-    password TEXT
+    password TEXT,
+    rights TEXT
 );
+
+INSERT INTO plants (name, price) VALUES ('Pennimuori', 15);
+INSERT INTO plants (name, price) VALUES ('Orkidea', 10);
+INSERT INTO plants (name, price) VALUES ('Jukkapalmu', 15);
