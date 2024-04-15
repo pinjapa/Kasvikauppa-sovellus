@@ -12,13 +12,13 @@
   <form action="/create-account" method="POST">
 
   <p>Käyttäjänimi:<br>
-  <input type="text" name="username"></p>
+  <input type="text" name="username" required minlength="6" maxlength="20"></p>
 
   <p>Salasana:<br>
-  <input type="password" name="password1"></p>
+  <input type="password" name="password1" required minlength="8" maxlength="20"></p>
 
   <p>Salasana uudestaan:<br>
-  <input type="password" name="password2"></p>
+  <input type="password" name="password2" required minlength="8" maxlength="20"></p>
   <p>
     Käytättäjänimen tulee olla vähintään 6 merkkiä
     <br>
