@@ -76,11 +76,21 @@ def all_plants():
     result = db.session.execute(text("SELECT name, price FROM Plants"))
     plants = result.fetchall()
     
-    #username = session["username"]
-    #sql = text("SELECT rights FROM Accounts WHERE username=:username")
-    #result = db.session.execute(sql, {"username":username})
-    #rights = result.fetchone()   
+    if session:
+        username = session["username"]
+        sql = text("SELECT rights FROM Accounts WHERE username=:username")
+        result = db.session.execute(sql, {"username":username})
+        user = result.fetchone()
+        
+        if user.rights == 'admin':
+            rights = True
+        else:
+            rights = False
+    if not session:
+        rights = False
 
-    return render_template("all_plants.html", count=len(plants), plants=plants)
+    return render_template("all_plants.html", count=len(plants), plants=plants, rights=rights)
 
-
+@app.route("/new_plant_page")
+def new_plant_page():
+    return render_template("new_plant.html")
