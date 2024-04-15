@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS accounts CASCADE;
 
 CREATE TABLE messages (
     id SERIAL PRIMARY KEY,
+    username TEXT,
     content TEXT NOT NULL
 );
 

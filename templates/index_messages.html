@@ -15,7 +15,7 @@
   <p>Olet kirjautunut nimellä {{ session.username }}</p>
   <hr>
   {% for message in messages %}
-  {{ message.content }}
+  {{message.username}}: {{ message.content }}
   <hr>
   {% endfor %}
   <a href="/new_message">Lähetä palaute</a>

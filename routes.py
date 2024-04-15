@@ -28,9 +28,10 @@ def new():
 @app.route("/send", methods=["POST"]) 
 def send():                 #adds feeback to the table
     content = request.form["content"]
+    username = session["username"]
     if len(content) > 500:
         return render_template("error.html", message=error_message + "Palutteesi on liian pitkä!")
-    messages.add_message(content)
+    messages.add_message(username, content)
     return redirect("/messages")
 
 
