@@ -1,7 +1,7 @@
 from db import db
 from sqlalchemy.sql import text
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask import render_template, session
+from flask import render_template, redirect, session
 
 error_message = "Tapahtui virhe: "
 
@@ -32,9 +32,9 @@ def create_account(username, password1, password2):
 
 def login(username, password):
     
-    sql = text("SELECT password FROM Accounts WHERE username=:username")
+    sql = text("SELECT id, password FROM Accounts WHERE username=:username")
     result = db.session.execute(sql, {"username":username})
-    user = result.fetchone()   
+    user = result.fetchone()  
     
     if not user:
         return render_template("error.html", message=error_message + "Et ole vielä käyttäjä!")
@@ -43,5 +43,6 @@ def login(username, password):
         hash_value = user.password
         if check_password_hash(hash_value, password):
             session["username"] = username
+            return redirect("/")
         else:
             return render_template("error.html", message="käyttäjänimi ja salasana eivät täsmää")

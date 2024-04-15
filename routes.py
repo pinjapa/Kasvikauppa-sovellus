@@ -59,9 +59,9 @@ def login():
 
     username = request.form["username"]
     password = request.form["password"]
-    accounts.login(username, password)     
+    result = accounts.login(username, password)     
     
-    return redirect("/")
+    return result
 
 @app.route("/logout") 
 def logout():
@@ -73,6 +73,14 @@ def logout():
 
 @app.route("/all-plants") #page where you can see plants
 def all_plants():
-    result = db.session.execute(text("SELECT name, price FROM plants"))
+    result = db.session.execute(text("SELECT name, price FROM Plants"))
     plants = result.fetchall()
+    
+    #username = session["username"]
+    #sql = text("SELECT rights FROM Accounts WHERE username=:username")
+    #result = db.session.execute(sql, {"username":username})
+    #rights = result.fetchone()   
+
     return render_template("all_plants.html", count=len(plants), plants=plants)
+
+
