@@ -7,18 +7,26 @@
 </head>
 
 <body>
+
   
-  <p>
-  Palautteita yhteensä: {{ count }} kpl
+  <p>Palautteita yhteensä: {{ count }} kpl</p>
+  
+  {% if session.username %}
+  <p>Olet kirjautunut nimellä {{ session.username }}</p>
   <hr>
   {% for message in messages %}
   {{ message.content }}
   <hr>
   {% endfor %}
-  <a href="/new_message">Lähetä viesti</a>
-  I
+  <a href="/new_message">Lähetä palaute</a>
+  
+  {% else %}
+  <p>Kirjaudu sisään nähdäksesi palautteet</p>
+  <a href="/login_page">Kirjaudu sisään tästä</a>
+  
+  {% endif %}
+  |
   <a href="/">Etusivulle</a>
-  </p>
   
 </body>
 
