@@ -93,4 +93,19 @@ def all_plants():
 
 @app.route("/new_plant_page")
 def new_plant_page():
-    return render_template("new_plant.html")
+    categories = db.session.execute(text("SELECT * FROM Categories"))    
+    return render_template("new_plant.html", categories=categories)
+
+@app.route("/save-plant", methods=["POST"])
+def save_plant():
+    plant_name = request.form["name"]
+    plant_category = request.form["category"]
+    plant_price = int(request.form["price"])
+    plant_description = request.form["description"]
+    sql = text("INSERT INTO Plants (name, price, category_id ) VALUES (:name, :price, :category_id)")
+    db.session.execute(sql, {"name": plant_name, "price": plant_price, "category_id": plant_category})
+    db.session.commit()
+
+    #print(plant_name, plant_category, plant_price, plant_description)
+    return redirect("/all-plants")
+

@@ -1,6 +1,7 @@
-DROP TABLE IF EXISTS messages CASCADE;
-DROP TABLE IF EXISTS plants CASCADE;
-DROP TABLE IF EXISTS accounts CASCADE;
+DROP TABLE IF EXISTS Messages CASCADE;
+DROP TABLE IF EXISTS Plants CASCADE;
+DROP TABLE IF EXISTS Accounts CASCADE;
+DROP TABLE IF EXISTS Categories CASCADE;
 
 CREATE TABLE Messages (
     id SERIAL PRIMARY KEY,
@@ -18,17 +19,15 @@ CREATE TABLE Accounts (
 CREATE TABLE Plants (
     id SERIAL PRIMARY KEY, 
     name TEXT,
-    price INTEGER
+    price INTEGER,
+    category_id INTEGER
 );
 
 CREATE TABLE Categories (
     id SERIAL PRIMARY KEY, 
-    name TEXT,
-    plant_ids INTEGER
+    name TEXT
 );
 
-
-
-INSERT INTO plants (name, price) VALUES ("Pennimuori", 15);
-INSERT INTO plants (name, price) VALUES ("Orkidea", 10);
-INSERT INTO plants (name, price) VALUES ("Jukkapalmu", 15);
+INSERT INTO Categories (name) VALUES ('Nahkealehtiset kasvit');
+INSERT INTO Categories (name) VALUES ('Kukat');
+INSERT INTO Categories (name) VALUES ('Köynnöskasvit');

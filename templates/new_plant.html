@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Uusi kasvi</title>
+</head>
+
+<body>
+    {% if session.username %}
+    
+    <h3>Uusi kasvi</h3>
+    <form action="/save-plant" method="POST">
+      <p>Kasvin nimi:<br>
+      <input type="text" name="name" required minlength="2" maxlength="30"></p>
+      <p>Kasvin kategoria:</p>
+      {% for category in categories %}
+      
+      <input type="radio" name="category" value="{{ category.id}}">{{ category.name}}
+      {% endfor %}
+      <p>Hinta:</p>
+      <input type="text" name="price" required minlength="1" maxlength="5"></p>
+      <p>Kuvaus:<br>
+      <textarea name="description" id="description" rows="10" cols="40" required minlength="2" maxlength="450" ></textarea><br>
+      <input type="submit" value="Luo kasvi">
+      </form>
+    {% endif %}
+  
+</body>
+
+</html>
