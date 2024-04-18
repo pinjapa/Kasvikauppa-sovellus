@@ -15,7 +15,7 @@
     Kasveja yhteensä: {{ count }} kpl
     <hr>
     {% for plant in plants %}
-    {{ plant.name}}, {{ plant.price }} €
+    <a href="/plant_page">{{ plant.name}}</a>, {{ plant.price }} €
     <hr>
     {% endfor %}
   </p>
@@ -25,7 +25,7 @@
   <a href="/messages">Anna palautetta</a>
   {% if rights==True %}
   <br>
-  <a href="/new_plant_page">Lisää uusi kasvi</a>
+  <a href="/new_plant">Lisää uusi kasvi</a>
   {% endif %}
 </body>
 
