@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Kasvi sivu</title>
+</head>
+
+<body>
+    {% if session.username %}
+    
+    <h3>{{ name }}</h3>
+    <p>Hinta: {{ price }} €</p>
+    <p>Kategoria: {{ category }}</p>
+    <p>Kuvaus käyttäjältä '{{ username }}': {{ content }}</p>
+    {% endif %}
+  
+</body>
+
+</html>

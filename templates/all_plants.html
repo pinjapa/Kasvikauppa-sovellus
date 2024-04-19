@@ -15,7 +15,7 @@
     Kasveja yhteensä: {{ count }} kpl
     <hr>
     {% for plant in plants %}
-    <a href="/plant_page">{{ plant.name}}</a>, {{ plant.price }} €
+    <a href="/plant_page/{{ plant.id }}">{{ plant.name }}</a>, {{ plant.price }} €
     <hr>
     {% endfor %}
   </p>

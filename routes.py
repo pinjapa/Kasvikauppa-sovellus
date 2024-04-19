@@ -73,7 +73,7 @@ def logout():
 
 @app.route("/all-plants") #page where you can see plants
 def all_plants():
-    result = db.session.execute(text("SELECT name, price FROM Plants"))
+    result = db.session.execute(text("SELECT id, name, price FROM Plants"))
     plants = result.fetchall()
     
     if session:
@@ -121,3 +121,20 @@ def save_plant():
 
     return redirect("/all-plants")
 
+@app.route("/plant_page/<int:id>")
+def plant_page(id):
+    sql = text("""SELECT P.name, A.username, P.price, D.content, C.name 
+               FROM Descriptions D, Plants P, Accounts A, Categories C 
+               WHERE D.plant_id = P.id
+               AND D.username_id = A.id
+               AND P.category_id = C.id
+               AND D.id=:id
+               ;""")
+    result = db.session.execute(sql, {"id":id})
+    all = result.fetchone()
+    name = all[0]
+    username = all[1]
+    price= all[2]
+    content = all[3]
+    category = all[4]
+    return render_template("plant_page.html",name=name, username=username, price=price, content=content, category=category)
