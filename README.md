@@ -5,14 +5,16 @@ Sovelluksen nykeinen tila:
 
 - Sisäänkirjautuessa syntyy käyttäjälle istunto
 - Uloskirjautuessa istunto poistuu
-- Ensimmäinen versio kasvikaupan kasvien selailusta ja siihen liittyvästä tietokannasta on olemassa
 - Sovellukseen voi luoda käyttäjän, jonka käyttäjänimi ja salasana tallentuvat tietokantaan
+- Admin -käyttäjä voi lisätä sovellukseen uuden kasvin
+- Jokaiselle kasville on oma sivunsa, josta näkee kasvin tietoja
 - Sovelluksessa pystyy kirjautuneena lähettämään palautetta.
 
 Tavoitteena on vielä:
-- Tietokantoja on tarkoitus laajentaa niin, että kasveista on enemmän tietoja tietokannoissa
-- Kasveja voi hakea eri suodattimilla esim. hinta ja saatavuus
-- Kaupan omistajalla on laajat oikeudet muokata kasvien tietoja
+- Kasveja voi hakea tietokannasta eri suodattimilla kuten hinta tai kategoria
+- Admin -käyttäjä voi poistaa palautteita tai kasveja
+- Profiili sivun täydentäminen
+- tyyli.css tiedoston luonti ja ukoasun parantaminen
 
 Sovelluksen käynnistäminen:
 Koneellesi täytyy luoda tiedosto .env samana kansioon kuin kloonattu repositorio
