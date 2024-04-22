@@ -2,6 +2,8 @@ from db import db
 from sqlalchemy.sql import text
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import render_template, redirect, session
+import secrets
+
 
 error_message = "Tapahtui virhe: "
 
@@ -43,6 +45,7 @@ def login(username, password):
         hash_value = user.password
         if check_password_hash(hash_value, password):
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             return render_template("error.html", message="käyttäjänimi ja salasana eivät täsmää")

@@ -1,5 +1,5 @@
 from app import app
-from flask import redirect, render_template, request, session
+from flask import redirect, render_template, request, session, abort
 from sqlalchemy.sql import text
 from os import getenv
 import messages
@@ -7,6 +7,7 @@ import accounts
 from db import db
 
 app.secret_key = getenv("SECRET_KEY")
+
 error_message = "Tapahtui virhe: "
 
 @app.route("/")         #front page
@@ -22,14 +23,22 @@ def index_messages():
 
 @app.route("/new_message") #page for new message
 def new():
+    if "csrf_token" not in session:
+        abort(403)
     return render_template("new_message.html")
 
 @app.route("/send", methods=["POST"]) 
 def send():                 #adds feeback to the table
+    if "csrf_token" not in session:
+        abort(403)
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    
     content = request.form["content"]
     username = session["username"]
     if len(content) > 500:
         return render_template("error.html", message=error_message + "Palutteesi on liian pitkä!")
+    
     messages.add_message(username, content)
     return redirect("/messages")
 
@@ -66,6 +75,7 @@ def login():
 @app.route("/logout") 
 def logout():
     del session["username"]
+    del session["csrf_token"]
     return redirect("/")
 
 
@@ -88,16 +98,23 @@ def all_plants():
             rights = False
     if not session:
         rights = False
+    
+    categories = db.session.execute(text("SELECT * FROM Categories"))
 
-    return render_template("all_plants.html", count=len(plants), plants=plants, rights=rights)
+    return render_template("all_plants.html", count=len(plants), plants=plants, rights=rights, categories=categories)
 
-@app.route("/new_plant")
+@app.route("/new_plant") #page to create new plant
 def new_plant():
     categories = db.session.execute(text("SELECT * FROM Categories"))    
     return render_template("new_plant.html", categories=categories)
 
-@app.route("/save-plant", methods=["POST"])
+@app.route("/save-plant", methods=["POST"]) #saves the plant to databse
 def save_plant():
+    if "csrf_token" not in session:
+        abort(403)
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+
     plant_name = request.form["name"]
     plant_category = request.form["category"]
     plant_price = int(request.form["price"])
