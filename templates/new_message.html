@@ -9,10 +9,10 @@
 <body>
   
   <p>
-    <form action="/send" method="POST">
+    <form action="/send" method="POST" onsubmit="return check(this)">
     Palaute: 
     <br>
-    <textarea name="content" id="content" rows="3" cols="40" required minlength="2" ></textarea>
+    <textarea name="content" id="content" rows="3" cols="40" required minlength="2" maxlength="500"></textarea>
     <br>
     <input type="submit" value="Lähetä">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
@@ -20,5 +20,14 @@
   </p>
   
 </body>
+<script>
+  function check(form) {
+      if (form.content.value.length > 500) {
+          alert("Palaute on liian pitkä");
+          return false;
+      }
+      return true;
+  }
+  </script>
 
 </html>
