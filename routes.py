@@ -1,5 +1,5 @@
 from app import app
-from flask import redirect, render_template, request, session, abort
+from flask import redirect, render_template, request, session, abort, flash
 from sqlalchemy.sql import text
 from os import getenv
 import messages
@@ -7,7 +7,6 @@ import accounts
 from db import db
 
 app.secret_key = getenv("SECRET_KEY")
-
 error_message = "Tapahtui virhe: "
 
 @app.route("/")         #front page
@@ -40,6 +39,7 @@ def send():                 #adds feeback to the table
         return render_template("error.html", message=error_message + "Palutteesi on liian pitkä!")
     
     messages.add_message(username, content)
+    flash("Palaute lisätty")
     return redirect("/messages")
 
 
@@ -59,23 +59,30 @@ def create_account():
     username = request.form["username"]
     password1 = request.form["password1"]
     password2 = request.form["password2"]
-    accounts.create_account(username, password1, password2)
-    
-    return redirect("/")
+    result = accounts.create_account(username, password1, password2)
+    if result == True:
+        flash("Käyttäjän luonti onnistui!")
+        return redirect("/login_page")
+    else:
+        return result
 
 @app.route("/login", methods=["POST"]) #login
 def login():
 
     username = request.form["username"]
     password = request.form["password"]
-    result = accounts.login(username, password)     
-    
-    return result
+    result = accounts.login(username, password)
+    if result == True:
+        flash("Kirjautuminen onnistui!")     
+        return redirect("/")
+    else:
+        return result
 
 @app.route("/logout") 
 def logout():
     del session["username"]
     del session["csrf_token"]
+    flash("Uloskirjautuminen onnistui!")
     return redirect("/")
 
 
@@ -136,6 +143,7 @@ def save_plant():
     db.session.execute(sql, {"content": plant_description, "plant_id": plant_id, "username_id": username_id} )
     db.session.commit()
 
+    flash("Kasvin lisäys onnistui!")
     return redirect("/all-plants")
 
 @app.route("/plant_page/<int:id>")

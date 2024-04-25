@@ -7,6 +7,8 @@
 </head>
 
 <body>
+  {% extends "layout.html" %}
+  {% block body %}
   <h1>
     Kasvikauppa
   </h1>
@@ -37,6 +39,7 @@
     <li>{{item}}
     {% endfor %}
   </ul>
+  {% endblock %}
 </body>
 
 </html>

@@ -7,12 +7,24 @@
 </head>
 
 <body>
+  {% extends "layout.html" %}
+  {% block body %}
   <h1>
     Kaikki kasvit
   </h1>
-
+  
   <p>
-    Kasveja yhteensä: {{ count }} kpl
+    <hr>
+    Kasveja yhteensä: {{ count }} kpl<br>
+    <hr>
+    <!--Suodattimet:
+    <br>
+    Kategoria:
+    {% for category in categories %}
+    <input type="checkbox" name="{{ category.name }}" value="{{ category.id }}" checked> {{ category.name }}
+    {% endfor %}
+    <br>
+    <input type="submit" value="Päivitä haku">-->
     <hr>
     {% for plant in plants %}
     <a href="/plant_page/{{ plant.id }}">{{ plant.name }}</a>, {{ plant.price }} €
@@ -27,6 +39,7 @@
   <br>
   <a href="/new_plant">Lisää uusi kasvi</a>
   {% endif %}
+  {% endblock %}
 </body>
 
 </html>

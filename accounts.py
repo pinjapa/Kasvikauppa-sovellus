@@ -1,7 +1,7 @@
 from db import db
 from sqlalchemy.sql import text
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask import render_template, redirect, session
+from flask import render_template, session
 import secrets
 
 
@@ -27,9 +27,14 @@ def create_account(username, password1, password2):
     if len(username) >= 6:
         if password1 == password2:
             hash_value = generate_password_hash(password1)
-            sql = text("INSERT INTO Accounts (username, password, rights) VALUES (:username, :password, :rights)")
-            db.session.execute(sql, {"username": username, "password": hash_value, "rights": rights})
-            db.session.commit()
+            try:
+                sql = text("INSERT INTO Accounts (username, password, rights) VALUES (:username, :password, :rights)")
+                db.session.execute(sql, {"username": username, "password": hash_value, "rights": rights})
+                db.session.commit()
+                return True #redirect("/login")
+
+            except:
+                return render_template("error.html", message=error_message + "Käyttäjänimi on jo olemassa!")
     
 
 def login(username, password):
@@ -46,6 +51,6 @@ def login(username, password):
         if check_password_hash(hash_value, password):
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
-            return redirect("/")
+            return True
         else:
             return render_template("error.html", message="käyttäjänimi ja salasana eivät täsmää")

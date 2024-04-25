@@ -7,6 +7,8 @@
 </head>
 
 <body>
+  {% extends "layout.html" %}
+  {% block body %}
   {% if session.username %}
   <p>Olet kirjautunut nimellä {{ session.username }}</p>
 
@@ -15,7 +17,7 @@
   <a href="/">Etusivulle</a>
   
   {% else %}
-  <form action="/login" method="POST">
+  <form action="/login" method="POST" onsubmit="return check(this)">
   <p>Tunnus:<br>
   <input type="text" name="username" required minlength="1" maxlength="20"></p>
   <p>Salasana:<br>
@@ -27,9 +29,22 @@
     |
     <a href="/">Etusivulle</a>
   </p>
-  
   {% endif %}
-  
+  {% endblock %}
 </body>
+
+<script>
+  function check(form) {
+      if (form.username.value.length > 20) {
+          alert("Käyttäjänimi on liian pitkä");
+          return false;
+      }
+      if (form.password.value.length > 20) {
+          alert("Salasana on liian pitkä");
+          return false;
+      }
+      return true;
+  }
+  </script>
 
 </html>
