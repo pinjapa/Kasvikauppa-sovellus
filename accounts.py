@@ -31,6 +31,9 @@ def create_account(username, password1, password2):
                 sql = text("INSERT INTO Accounts (username, password, rights) VALUES (:username, :password, :rights)")
                 db.session.execute(sql, {"username": username, "password": hash_value, "rights": rights})
                 db.session.commit()
+                session["username"] = username
+                session["csrf_token"] = secrets.token_hex(16)
+                
                 return True #redirect("/login")
 
             except:
@@ -57,6 +60,8 @@ def login(username, password):
             return render_template("error.html", message="käyttäjänimi ja salasana eivät täsmää")
 
 def check_rights():
+    if not session:
+        return False
     if session:
         username = session["username"]
         sql = text("SELECT rights FROM Accounts WHERE username=:username")
@@ -67,8 +72,7 @@ def check_rights():
             return True
         else:
             return False
-    if not session:
-        return False
+    
 
 
 def check_changes(change, username):
