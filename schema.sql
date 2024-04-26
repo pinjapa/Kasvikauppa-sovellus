@@ -39,4 +39,5 @@ CREATE TABLE Descriptions (
 INSERT INTO Categories (name) VALUES ('Nahkealehtiset kasvit');
 INSERT INTO Categories (name) VALUES ('Kukat');
 INSERT INTO Categories (name) VALUES ('Köynnöskasvit');
+INSERT INTO Categories (name) VALUES ('Muut');
 INSERT INTO Accounts (username, password, rights) VALUES ('Omistaja', 'scrypt:32768:8:1$l5XlEaf7BdF8dYmn$05dbb1e924066de52abd4355b469df8e74e1d618e5ae940d606ac84279a7d23075525cf28fb308d7a146b9b114d2783e50b4fa632324ba1cef58d0e8b5b2f4a6', 'admin');

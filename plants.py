@@ -43,3 +43,41 @@ def plantpage(id):
     all = result.fetchone()
    
     return all
+
+def filter_by_category(category):
+    if category == "all":
+        sql = text("""SELECT P.id, P.name, P.price
+                    FROM Plants P, Categories C
+                    WHERE P.category_id = C.id""")
+        result = db.session.execute(sql, {"category":category})
+        all = result.fetchall()
+        return all
+    
+    elif category == "lowest":
+        sql = text("""SELECT P.id, P.name, P.price
+                    FROM Plants P, Categories C
+                    WHERE P.category_id = C.id
+                    ORDER BY P.price""")
+        result = db.session.execute(sql, {"category":category})
+        all = result.fetchall()
+        return all
+    
+    elif category == "highest":
+        sql = text("""SELECT P.id, P.name, P.price
+                    FROM Plants P, Categories C
+                    WHERE P.category_id = C.id
+                    ORDER BY P.price DESC""")
+        result = db.session.execute(sql, {"category":category})
+        all = result.fetchall()
+        return all
+    
+    else:
+        sql = text("""SELECT P.id, P.name, P.price
+                    FROM Plants P, Categories C
+                    WHERE P.category_id = C.id
+                    AND C.id=:category""")
+        result = db.session.execute(sql, {"category":category})
+        all = result.fetchall()
+    
+        return all
+        

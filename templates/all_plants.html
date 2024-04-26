@@ -14,22 +14,28 @@
   </h1>
   
   <p>
-    <hr>
     Kasveja yhteensä: {{ count }} kpl<br>
     <hr>
-    <!--Suodattimet:
+  <form action="/all-plants" method="POST">
+    Suodattimet:
     <br>
     Kategoria:
     {% for category in categories %}
-    <input type="checkbox" name="{{ category.name }}" value="{{ category.id }}" checked> {{ category.name }}
+      <input type="radio" name="category" value="{{ category.id}}">{{ category.name}}
     {% endfor %}
-    <br>
-    <input type="submit" value="Päivitä haku">-->
+    <input type="radio" name="category" value="all">Kaikki kasvit<br>
+    Hinta: 
+    <input type="radio" name="category" value="lowest"> Halvin ensin
+    <input type="radio" name="category" value="highest"> Kallein ensin <br>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <input type="submit" value="Päivitä haku">
+  </form>
     <hr>
     {% for plant in plants %}
     <a href="/plant_page/{{ plant.id }}">{{ plant.name }}</a>, {{ plant.price }} €
     <hr>
     {% endfor %}
+    {{ list }}
   </p>
 
   <a href="/">Etusivu</a>
