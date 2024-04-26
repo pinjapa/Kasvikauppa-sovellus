@@ -36,12 +36,13 @@ def create_account(username, password1, password2):
             except:
                 return render_template("error.html", message=error_message + "Käyttäjänimi on jo olemassa!")
     
-
-def login(username, password):
-    
+def check_username(username):
     sql = text("SELECT id, password FROM Accounts WHERE username=:username")
     result = db.session.execute(sql, {"username":username})
-    user = result.fetchone()  
+    return result.fetchone()
+
+def login(username, password):
+    user = check_username(username)  
     
     if not user:
         return render_template("error.html", message=error_message + "Et ole vielä käyttäjä!")
@@ -68,3 +69,47 @@ def check_rights():
             return False
     if not session:
         return False
+
+
+def check_changes(change, username):
+    user = check_username(username)
+    if not user:
+        return False
+    
+    if change == "admin":
+        return update_rights(username)
+    if change == "visitor":
+        return change_to_visitor(username)
+    if change == "delete":
+        return delete_account(username)
+
+def update_rights(username):
+    try:
+        sql = text("UPDATE Accounts SET rights='admin' WHERE username=:username")
+        db.session.execute(sql, {"username":username})
+        db.session.commit()
+        return True
+    except:
+        return False
+    
+def change_to_visitor(username):
+    user = check_username(username)
+    if not user:
+        return False
+    try:
+        sql = text("UPDATE Accounts SET rights='visitor' WHERE username=:username")
+        db.session.execute(sql, {"username":username})
+        db.session.commit()
+        return True
+    except:
+        return False
+
+def delete_account(username):
+    try:
+        sql = text("DELETE FROM Accounts WHERE username=:username")
+        db.session.execute(sql, {"username":username})
+        db.session.commit()
+        return True
+    except:
+        return False
+    

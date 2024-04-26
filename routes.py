@@ -48,7 +48,15 @@ def send():                 #adds feeback to the table
 
 @app.route("/login_page")
 def login_page():
-    return render_template("login_page.html")
+    rights = accounts.check_rights()
+    if rights:
+        b_rights = True
+        rights = 'admin'
+        
+    else:
+        b_rights = False
+        rights = 'visitor'
+    return render_template("login_page.html", rights=rights, boolean_rights=b_rights)
 
 @app.route("/create-account-page")
 def create_account_page():
@@ -86,7 +94,28 @@ def logout():
     flash("Uloskirjautuminen onnistui!")
     return redirect("/")
 
+@app.route("/update", methods=["POST"])
+def update_rights():
+    if "csrf_token" not in session:
+        abort(403)
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    
+    username = request.form["username"]
+    try:
+        changes = request.form["changes"]
+    except:
+        flash("Valitse muutos ensin!")
+        return redirect("/login_page")
+    
+    result = accounts.check_changes(changes, username)
 
+    if result:
+        flash("Päivittäminen onnistui!")
+        return redirect("/login_page")
+    else:
+        flash("Päivittäminen epäonnistui!")
+        return redirect("/login_page")
 
 
 @app.route("/all-plants") #page where you can see plants
@@ -124,7 +153,7 @@ def save_plant():
 
 @app.route("/plant_page/<int:id>")
 def plant_page(id):
-    
+
     result = plants.plantpage(id)
     
     return render_template("plant_page.html",name=result[0], username=result[1], price=result[2], content=result[3], category=result[4])
