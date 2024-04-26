@@ -9,11 +9,11 @@ Sovelluksen nykeinen tila:
 - Admin -käyttäjä voi lisätä sovellukseen uuden kasvin
 - Jokaiselle kasville on oma sivunsa, josta näkee kasvin tietoja
 - Sovelluksessa pystyy kirjautuneena lähettämään palautetta.
+-  Kasveja voi hakea tietokannasta eri suodattimilla kuten hinta tai kategoria
+-  Admin voi antaa toiselle käyttäjälle admin -oikeudet, poistaa admin -oikeudet tai poistaa käyttäjän
 
 Tavoitteena on vielä:
-- Kasveja voi hakea tietokannasta eri suodattimilla kuten hinta tai kategoria
 - Admin -käyttäjä voi poistaa palautteita tai kasveja
-- Profiili sivun täydentäminen
 - tyyli.css tiedoston luonti ja ukoasun parantaminen
 
 Sovelluksen käynnistäminen:
