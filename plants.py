@@ -79,5 +79,4 @@ def filter_by_category(category):
         result = db.session.execute(sql, {"category":category})
         all = result.fetchall()
     
-        return all
-        
+        return all    

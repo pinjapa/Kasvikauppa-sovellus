@@ -60,19 +60,20 @@ def login(username, password):
             return render_template("error.html", message="käyttäjänimi ja salasana eivät täsmää")
 
 def check_rights():
-    if not session:
-        return False
-    if session:
-        username = session["username"]
-        sql = text("SELECT rights FROM Accounts WHERE username=:username")
-        result = db.session.execute(sql, {"username":username})
-        user = result.fetchone()
+    try:
+        if session["username"]:
+            print("moi")
+            username = session["username"]
+            sql = text("SELECT rights FROM Accounts WHERE username=:username")
+            result = db.session.execute(sql, {"username":username})
+            user = result.fetchone()
         
-        if user.rights == 'admin':
-            return True
-        else:
-            return False
-    
+            if user.rights == 'admin':
+                return True
+            else:
+                return False
+    except:
+        return False
 
 
 def check_changes(change, username):

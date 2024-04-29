@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  
+  <h3>Anna palautetta:</h3>
   <p>
     <form action="/send" method="POST" onsubmit="return check(this)">
     Palaute: 
@@ -17,6 +17,7 @@
     <input type="submit" value="Lähetä">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
   </form>
+  <a href="/messages">Takaisin</a>
   </p>
   
 </body>

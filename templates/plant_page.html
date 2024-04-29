@@ -7,13 +7,13 @@
 </head>
 
 <body>
-    {% if session.username %}
     
     <h3>{{ name }}</h3>
-    <p>Hinta: {{ price }} €</p>
-    <p>Kategoria: {{ category }}</p>
-    <p>Kuvaus käyttäjältä '{{ username }}': {{ content }}</p>
-    {% endif %}
+    <p>
+    Hinta: {{ price }} € <br>
+    Kategoria: {{ category }} <br>
+    Kuvaus käyttäjältä '{{ username }}': {{ content }}
+    </p>
   
 </body>
 

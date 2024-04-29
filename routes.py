@@ -127,11 +127,6 @@ def all_plants_page():
 
 @app.route("/all-plants", methods=["POST"]) #to filter plants
 def all_plants():
-    if "csrf_token" not in session:
-        abort(403)
-    if session["csrf_token"] != request.form["csrf_token"]:
-        abort(403)
-    
     rights = accounts.check_rights()
     try:
         wanted_category = request.form["category"]
@@ -141,7 +136,7 @@ def all_plants():
     
     except:
         flash("Valitse kategoria tai hinta ensin!")
-        return redirect("/all-plants-page")
+        return redirect("/all-plants-page")   
     
 
 @app.route("/new_plant") #page to create new plant
@@ -171,7 +166,6 @@ def save_plant():
 
 @app.route("/plant_page/<int:id>") #page for individual plant
 def plant_page(id):
-
     result = plants.plantpage(id)
     
     return render_template("plant_page.html",name=result[0], username=result[1], price=result[2], content=result[3], category=result[4])
