@@ -3,19 +3,18 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Uusi kasvi</title>
 </head>
 
-<body>
+  {% extends "layout.html" %}
+  {% block title %}Uusi kasvi{% endblock %}
+  {% block body %}
     {% if session.username %}
-    
     <h3>Uusi kasvi</h3>
     <form action="/save-plant" method="POST">
       <p>Kasvin nimi:<br>
       <input type="text" name="name" required minlength="2" maxlength="30"></p>
       <p>Kasvin kategoria:</p>
       {% for category in categories %}
-      
       <input type="radio" name="category" value="{{ category.id}}">{{ category.name}}
       {% endfor %}
       <p>Hinta:</p>
@@ -27,7 +26,6 @@
       </form>
     {% endif %}
     <a href="/all-plants-page">Takaisin</a>
-  
-</body>
+  {% endblock %}
 
 </html>

@@ -3,18 +3,17 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Kasvi sivu</title>
 </head>
 
-<body>
-    
+{% extends "layout.html" %}
+{% block title %}kaikki kasvit{% endblock %}
+{% block body %}  
     <h3>{{ name }}</h3>
     <p>
     Hinta: {{ price }} € <br>
     Kategoria: {{ category }} <br>
     Kuvaus käyttäjältä '{{ username }}': {{ content }}
-    </p>
-  
-</body>
+    </p> 
+{% endblock %}
 
 </html>

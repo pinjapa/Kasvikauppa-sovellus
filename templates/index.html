@@ -5,23 +5,18 @@
   <meta charset="utf-8">
 </head>
 
-<body>
   {% extends "layout.html" %}
   {% block title %}Etusivu{% endblock %}
   {% block body %}
-  <h1>
-    Kasvikauppa
-  </h1>
-  <h2>
-    Etusivu
-  </h2>
-  
+  <h1>Kasvikauppa</h1>
+  <h2>Etusivu</h2>
   <img src="/static/flower_test.png"
         width="500"
         height="450" />
     <br>
+  <p>{{ message }}</p>
   {% if session.username %}
-  <p>Olet kirjautunut nimellä {{ session.username }}</p>
+  <p>Olet kirjautunut käyttäjänimellä {{ session.username }}</p>
   <a href="/logout">Kirjaudu ulos</a>
   <br>
   {% endif %}
@@ -31,15 +26,9 @@
   <br>
   <a href="/all-plants-page">Kaikki kasvit</a>
   <br>
+  <br>
   Sovelluksen käyttäjien arvio: {{ avg }} tähteä.
   <br>   
-  <p>{{ message }}</p>
-  <ul>
-    {% for item in items %}
-    <li>{{item}}
-    {% endfor %}
-  </ul>
   {% endblock %}
-</body>
 
 </html>

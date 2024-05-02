@@ -2,17 +2,14 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>Kasvikauppa</title>
+  <meta charset="utf-8"> 
 </head>
-
-<body>
+  
   {% extends "layout.html" %}
+  {% block title %}kaikki kasvit{% endblock %}
   {% block body %}
   <h3>Kaikki palautteet</h3>
-  
   <p>Palautteita yhteensä: {{ count }} kpl</p>
-  
   {% if session.username %}
   <p>Olet kirjautunut nimellä {{ session.username }}</p>
   <hr>
@@ -21,15 +18,12 @@
   <hr>
   {% endfor %}
   <a href="/new_message">Lähetä palaute</a>
-  
   {% else %}
   <p>Kirjaudu sisään nähdäksesi palautteet</p>
   <a href="/login_page">Kirjaudu sisään tästä</a>
-  
   {% endif %}
   |
   <a href="/">Etusivulle</a>
   {% endblock %}
-</body>
 
 </html>

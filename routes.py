@@ -5,18 +5,17 @@ from os import getenv
 import messages
 import accounts
 import plants
-from db import db
+#from db import db
 
 app.secret_key = getenv("SECRET_KEY")
 error_message = "Tapahtui virhe: "
 
 @app.route("/")         #front page
 def index():
-    words = ["kukat", "köynöskasvit", "kaktukset"]
-    avg=messages.get_average()
+    avg = messages.get_average()
     if not avg:
         avg = "_"
-    return render_template("index.html", message="Tervetuloa!", items=words, avg=avg)
+    return render_template("index.html", message="Tervetuloa!", avg=avg)
 
 
 @app.route("/messages") #feedback page
@@ -38,20 +37,17 @@ def send():                 #adds feeback to the table
         abort(403)
     
     content = request.form["content"]
-    try:
-        stars = int(request.form["stars"])
-    except:
-        flash("Valitse arvio!")
-        redirect("/new_message")
     username = session["username"]
     if len(content) > 500:
         return render_template("error.html", message=error_message + "Palutteesi on liian pitkä!")
-    
-    messages.add_message(username, content, stars)
-    flash("Palaute lisätty")
-    return redirect("/messages")
-
-
+    try:
+        stars = int(request.form["stars"])
+        messages.add_message(username, content, stars)
+        flash("Palaute lisätty", "flash-succeed")
+        return redirect("/messages")
+    except:
+        flash("Valitse arvio!", "flash-neutral")
+        return redirect("/new_message")
 
 
 @app.route("/login_page")
@@ -78,11 +74,11 @@ def create_account():
     password2 = request.form["password2"]
     result = accounts.create_account(username, password1, password2)
     if result == True:
-        flash("Käyttäjän luonti onnistui!")
-        flash("Olet kirjautunut sisään!")
+        flash("Käyttäjän luonti onnistui! Olet kirjautuneena sisään", "flash-succeed")
         return redirect("/login_page")
     else:
-        return result
+        flash("Käyttäjän luonti epäonnistui!", "flash-error")
+        return redirect("/login_page")
 
 @app.route("/login", methods=["POST"]) #login
 def login():
@@ -91,7 +87,7 @@ def login():
     password = request.form["password"]
     result = accounts.login(username, password)
     if result == True:
-        flash("Kirjautuminen onnistui!")     
+        flash("Kirjautuminen onnistui!", "flash-succeed")     
         return redirect("/")
     else:
         return result
@@ -100,7 +96,7 @@ def login():
 def logout():
     del session["username"]
     del session["csrf_token"]
-    flash("Uloskirjautuminen onnistui!")
+    flash("Uloskirjautuminen onnistui!", "flash-succeed")
     return redirect("/")
 
 @app.route("/update", methods=["POST"])
@@ -114,16 +110,16 @@ def update_rights():
     try:
         changes = request.form["changes"]
     except:
-        flash("Valitse muutos ensin!")
+        flash("Valitse muutos ensin!", "flash-neutral")
         return redirect("/login_page")
     
     result = accounts.check_changes(changes, username)
 
     if result:
-        flash("Päivittäminen onnistui!")
+        flash("Päivittäminen onnistui!", "flash-succeed")
         return redirect("/login_page")
     else:
-        flash("Päivittäminen epäonnistui!")
+        flash("Päivittäminen epäonnistui!", "flash-error")
         return redirect("/login_page")
 
 
@@ -143,7 +139,7 @@ def all_plants():
         return render_template("all_plants.html",count=len(plant_s), plants=plant_s, rights=rights, categories=categories)
     
     except:
-        flash("Valitse kategoria tai hinta ensin!")
+        flash("Valitse kategoria tai hinta ensin!", "flash-neutral")
         return redirect("/all-plants-page")   
     
 
@@ -163,15 +159,19 @@ def save_plant():
 
     plant_name = request.form["name"]
     plant_category = request.form["category"]
-    plant_price = int(request.form["price"])
+    try:
+        plant_price = int(request.form["price"])
+    except:
+        flash("Tarkista hinta!", "flash-neutral")
+        return redirect("/new_plant")
     plant_description = request.form["description"]
     username = session["username"]
 
     result = plants.save_plant(plant_name, plant_category, plant_price, plant_description, username)
     if result:
-        flash("Kasvin lisäys onnistui!")
+        flash("Kasvin lisäys onnistui!", "flash-succeed")
     else:
-        flash("Kasvin lisääminen epäonnistui!")
+        flash("Kasvin lisääminen epäonnistui!", "flash-error")
     return redirect("/all-plants-page")
 
 @app.route("/plant_page/<int:id>") #page for individual plant

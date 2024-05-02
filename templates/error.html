@@ -3,13 +3,13 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Kirjautuminen</title>
 </head>
 
-<body>
+  {% extends "layout.html" %}
+  {% block title %}Virhe{% endblock %}
+  {% block body %}
   <p>{{ message }}</p>
   <a href="/login_page">Takaisin kirjautumiseen</a>
-  
-</body>
+  {% endblock %}
 
 </html>

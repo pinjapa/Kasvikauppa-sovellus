@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
+  <head>
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+  </head>
+<title>Kasvikauppa - {% block title %}{% endblock %}</title>
 
-<body>
-    {% with messages = get_flashed_messages() %}
+<body class="center">
+  
+    {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
+      
         <ul class=flashes>
-        {% for message in messages %}
-          {{ message }}
+        {% for category, message in messages %}
+        <div class="{{ category }}">{{message}}</div>
         {% endfor %}
         </ul>
       {% endif %}
     {% endwith %}
     {% block body %}{% endblock %}
+  
 </body>
 
 </html>

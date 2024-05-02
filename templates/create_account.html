@@ -3,32 +3,28 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Luo käytäjä</title>
 </head>
-
-<body>
-
-  <h1>Luo käyttäjä</h1>
-  <form action="/create-account" method="POST">
-
-  <p>Käyttäjänimi:<br>
-  <input type="text" name="username" required minlength="6" maxlength="20"></p>
-
-  <p>Salasana:<br>
-  <input type="password" name="password1" required minlength="8" maxlength="20"></p>
-
-  <p>Salasana uudestaan:<br>
-  <input type="password" name="password2" required minlength="8" maxlength="20"></p>
+  {% extends "layout.html" %}
+  {% block title %}Profiili{% endblock %}
+  {% block body %}
   <p>
-    Käytättäjänimen tulee olla vähintään 6 merkkiä
+    <h1>Luo käyttäjä</h1>
+    <form action="/create-account" method="POST">
+    Käyttäjänimi:<br>
+    Käytättäjänimen tulee olla vähintään 6 merkkiä <br>
+    <input type="text" name="username" required minlength="6" maxlength="20"><br><br>
+    Salasana:<br>
+    Salasanan tulee olla vähintään 8 merkkiä <br>
+    <input type="password" name="password1" required minlength="8" maxlength="20"><br><br>
+    Salasana uudestaan:<br>
+    <input type="password" name="password2" required minlength="8" maxlength="20"><br>
     <br>
-    Salasanan tulee olla vähintään 8 merkkiä
+    <input type="submit" value="Luo käyttäjä"><br>
+    </form>
+    <br>
+    <a href="/">Etusivulle</a>
   </p>
-
-  <input type="submit" value="Luo käyttäjä">
-  </form>
+  {% endblock %}
   
-  <a href="/">Etusivulle</a>
-</body>
 
 </html>

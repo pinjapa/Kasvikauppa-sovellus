@@ -3,49 +3,42 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Kasvikauppa</title>
 </head>
-
-<body>
-  {% extends "layout.html" %}
-  {% block body %}
-  <h1>
-    Kaikki kasvit
-  </h1>
-  
-  <p>
-    Kasveja yhteensä: {{ count }} kpl<br>
-    <hr>
-  <form action="/all-plants" method="POST">
-    Suodattimet:
-    <br>
-    Kategoria:
-    {% for category in categories %}
-      <input type="radio" name="category" value="{{ category.id}}">{{ category.name}}
-    {% endfor %}
-    <input type="radio" name="category" value="all">Kaikki kasvit<br>
-    Hinta: 
-    <input type="radio" name="category" value="lowest"> Halvin ensin
-    <input type="radio" name="category" value="highest"> Kallein ensin <br>
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-    <input type="submit" value="Päivitä haku">
-  </form>
-    <hr>
-    {% for plant in plants %}
-    <a href="/plant_page/{{ plant.id }}">{{ plant.name }}</a>, {{ plant.price }} €
-    <hr>
-    {% endfor %}
-    {{ list }}
-  </p>
-
-  <a href="/">Etusivu</a>
-  |
-  <a href="/messages">Anna palautetta</a>
-  {% if rights==True %}
+{% extends "layout.html" %}
+{% block title %}kaikki kasvit{% endblock %}
+{% block body %}
+<h1>Kaikki kasvit</h1>
+<p>
+  Kasveja yhteensä: {{ count }} kpl<br>
+<hr>
+<form action="/all-plants" method="POST">
+  Suodattimet:
   <br>
-  <a href="/new_plant">Lisää uusi kasvi</a>
-  {% endif %}
-  {% endblock %}
-</body>
+  Kategoria:
+  {% for category in categories %}
+    <input type="radio" name="category" value="{{ category.id}}">{{ category.name}}
+  {% endfor %}
+  <input type="radio" name="category" value="all">Kaikki kasvit<br>
+  Hinta: 
+  <input type="radio" name="category" value="lowest"> Halvin ensin
+  <input type="radio" name="category" value="highest"> Kallein ensin <br>
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+  <input type="submit" value="Päivitä haku">
+</form>
+<hr>
+{% for plant in plants %}
+  <a href="/plant_page/{{ plant.id }}">{{ plant.name }}</a>, {{ plant.price }} €
+  <hr>
+{% endfor %}
+{{ list }}
+</p>
+<a href="/">Etusivu</a>
+|
+<a href="/messages">Anna palautetta</a>
+{% if rights==True %}
+<br>
+<a href="/new_plant">Lisää uusi kasvi</a>
+{% endif %}
+{% endblock %}
 
 </html>

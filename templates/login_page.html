@@ -3,11 +3,10 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Profiili</title>
 </head>
 
-<body>
   {% extends "layout.html" %}
+  {% block title %}Profiili{% endblock %}
   {% block body %}
   {% if session.username %}
   <p>
@@ -17,7 +16,6 @@
   <a href="/logout">Kirjaudu ulos</a>
   |
   <a href="/">Etusivulle</a>
-  
   {% else %}
   <form action="/login" method="POST" onsubmit="return check(this)">
    <p>Tunnus:<br>
@@ -45,7 +43,6 @@
   </form>
   {% endif %}
   {% endblock %}
-</body>
 
 <script>
   function check(form) {
