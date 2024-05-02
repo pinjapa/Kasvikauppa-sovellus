@@ -5,7 +5,6 @@ from os import getenv
 import messages
 import accounts
 import plants
-#from db import db
 
 app.secret_key = getenv("SECRET_KEY")
 error_message = "Tapahtui virhe: "
@@ -21,7 +20,21 @@ def index():
 @app.route("/messages") #feedback page
 def index_messages():
     all_messages = messages.get_messages()
-    return render_template("index_messages.html",count=len(all_messages), messages=all_messages)
+    rights = accounts.check_rights()
+    return render_template("index_messages.html",count=len(all_messages), messages=all_messages, rights=rights)
+
+@app.route("/remove-message", methods=["POST"]) #removes a message
+def remove_message():
+    try:
+        content = request.form["remove"]
+        messages.delete_message(content)
+        flash("Poisto onnistui!", "flash-succeed")
+        return redirect("/messages")
+
+    except:
+        flash("Poisto epäonnistui!", "flash-error")
+        return redirect("/messages")
+
 
 @app.route("/new_message") #page for new message
 def new():
