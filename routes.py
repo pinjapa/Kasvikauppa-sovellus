@@ -54,8 +54,10 @@ def send():                 #adds feeback to the table
     if len(content) > 500:
         return render_template("error.html", message=error_message + "Palutteesi on liian pitkä!")
     try:
+        messages.add_message(username, content)
         stars = int(request.form["stars"])
-        messages.add_message(username, content, stars)
+        if stars > 0:
+            messages.add_rating(stars)
         flash("Palaute lisätty", "flash-succeed")
         return redirect("/messages")
     except:
