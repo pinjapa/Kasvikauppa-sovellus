@@ -3,11 +3,11 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Kasvikauppa</title>
 </head>
 
 <body>
   {% extends "layout.html" %}
+  {% block title %}Etusivu{% endblock %}
   {% block body %}
   <h1>
     Kasvikauppa
@@ -31,7 +31,7 @@
   <br>
   <a href="/all-plants-page">Kaikki kasvit</a>
   <br>
-  
+  Sovelluksen käyttäjien arvio: {{ avg }} tähteä.
   <br>   
   <p>{{ message }}</p>
   <ul>

@@ -7,9 +7,18 @@
 </head>
 
 <body>
+  {% extends "layout.html" %}
+  {% block body %}
   <h3>Anna palautetta:</h3>
   <p>
     <form action="/send" method="POST" onsubmit="return check(this)">
+    Arvio:
+    <input type="radio" name="stars" value="1">1
+    <input type="radio" name="stars" value="2">2
+    <input type="radio" name="stars" value="3">3
+    <input type="radio" name="stars" value="4">4
+    <input type="radio" name="stars" value="5">5
+    <input type="radio" name="stars" value="0">Ei tähtiarvostelua <br>
     Palaute: 
     <br>
     <textarea name="content" id="content" rows="3" cols="40" required minlength="2" maxlength="500"></textarea>
@@ -19,7 +28,7 @@
   </form>
   <a href="/messages">Takaisin</a>
   </p>
-  
+  {% endblock %}  
 </body>
 <script>
   function check(form) {

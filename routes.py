@@ -13,13 +13,16 @@ error_message = "Tapahtui virhe: "
 @app.route("/")         #front page
 def index():
     words = ["kukat", "köynöskasvit", "kaktukset"]
-    return render_template("index.html", message="Tervetuloa!", items=words)
+    avg=messages.get_average()
+    if not avg:
+        avg = "_"
+    return render_template("index.html", message="Tervetuloa!", items=words, avg=avg)
 
 
 @app.route("/messages") #feedback page
 def index_messages():
     all_messages = messages.get_messages()
-    return render_template("index_messages.html", count=len(all_messages), messages=all_messages)
+    return render_template("index_messages.html",count=len(all_messages), messages=all_messages)
 
 @app.route("/new_message") #page for new message
 def new():
@@ -35,11 +38,16 @@ def send():                 #adds feeback to the table
         abort(403)
     
     content = request.form["content"]
+    try:
+        stars = int(request.form["stars"])
+    except:
+        flash("Valitse arvio!")
+        redirect("/new_message")
     username = session["username"]
     if len(content) > 500:
         return render_template("error.html", message=error_message + "Palutteesi on liian pitkä!")
     
-    messages.add_message(username, content)
+    messages.add_message(username, content, stars)
     flash("Palaute lisätty")
     return redirect("/messages")
 
@@ -141,6 +149,8 @@ def all_plants():
 
 @app.route("/new_plant") #page to create new plant
 def new_plant():
+    if "csrf_token" not in session:
+        abort(403)
     categories = plants.fetch_plants()[1]    
     return render_template("new_plant.html", categories=categories)
 
