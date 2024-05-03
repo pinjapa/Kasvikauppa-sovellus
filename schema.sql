@@ -39,7 +39,7 @@ CREATE TABLE Descriptions (
     id SERIAL PRIMARY KEY, 
     content TEXT,
     plant_id INTEGER REFERENCES Plants,
-    username_id INTEGER REFERENCES Accounts
+    username_id INTEGER REFERENCES Accounts ON DELETE CASCADE
 );
 
 INSERT INTO Categories (name) VALUES ('Nahkealehtiset kasvit');
