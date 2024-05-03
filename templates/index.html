@@ -10,22 +10,21 @@
   {% block body %}
   <h1>Kasvikauppa</h1>
   <h2>Etusivu</h2>
+  <a class="box" href="/messages">Anna palautetta</a>
+  |
+  <a class="box" href="/all-plants-page">Kaikki kasvit</a>
+  |
+  <a class="box" href="/login_page">Profiili</a><br><br>
   <img src="/static/flower_test.png"
         width="500"
         height="450" />
     <br>
-  <p>{{ message }}</p>
+  <h3><strong> {{ message }} </strong></h3>
   {% if session.username %}
   <p>Olet kirjautunut käyttäjänimellä {{ session.username }}</p>
-  <a href="/logout">Kirjaudu ulos</a>
+  <a class="box" href="/logout">Kirjaudu ulos</a>
   <br>
   {% endif %}
-  <a href="/login_page">Profiili</a>
-  <br>
-  <a href="/messages">Anna palautetta</a>
-  <br>
-  <a href="/all-plants-page">Kaikki kasvit</a>
-  <br>
   <br>
   Sovelluksen käyttäjien arvio: {{ avg }} tähteä.
   <br>   

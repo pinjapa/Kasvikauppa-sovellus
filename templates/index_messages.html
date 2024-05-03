@@ -9,33 +9,31 @@
   {% block title %}kaikki kasvit{% endblock %}
   {% block body %}
     <p>
-    <h3>Kaikki palautteet</h3>
+    <h2>Kaikki palautteet</h2>
     
       Palautteita yhteensä: {{ count }} kpl <br><br>
       {% if session.username %}
       Olet kirjautunut käyttäjänimellä {{ session.username }}
       <hr>
       {% for message in messages %}
-        {{message.username}}: {{ message.content }}
+        <p>{{message.username}}: {{ message.content }}</p>
         {% if rights==True %}
         <form action="/remove-message" method="POST">
           <input type="radio" name="remove" value="{{ message.content }}">Poista
           <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-          <hr>
           {% endif %}
+          <hr>
           {% endfor %}
           {% if rights==True %}
           <input type="submit" value="Poista">
-        </form>
+        </form><br>
         {% endif %}
-      
-      <a href="/new_message">Lähetä palaute</a>
+      <a class="box" href="/new_message">Lähetä palaute</a>
       {% else %}
       Kirjaudu sisään nähdäksesi palautteet <br>
-      <a href="/login_page">Kirjaudu sisään tästä</a>
+      <a class="box" href="/login_page">Kirjaudu sisään tästä</a>
       {% endif %}
-    |
-    <a href="/">Etusivulle</a>
+    <a class="box" href="/">Etusivulle</a>
     </p>
   {% endblock %}
 

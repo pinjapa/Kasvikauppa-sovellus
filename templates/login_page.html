@@ -10,12 +10,12 @@
   {% block body %}
   {% if session.username %}
   <p>
-    Olet kirjautunut nimellä {{ session.username }}<br>
+    Olet kirjautunut käyttäjänimellä {{ session.username }}<br>
   <li>Sinulla on {{ rights }} -oikeudet.</li>
   </p>
-  <a href="/logout">Kirjaudu ulos</a>
+  <a class="box" href="/logout">Kirjaudu ulos</a>
   |
-  <a href="/">Etusivulle</a>
+  <a class="box" href="/">Etusivulle</a>
   {% else %}
   <form action="/login" method="POST" onsubmit="return check(this)">
    <p>Tunnus:<br>
@@ -25,13 +25,13 @@
    <input type="submit" value="Kirjaudu">
   </form>
   <p>
-    <a href="/create-account-page">Luo käyttäjä </a>
+    <a class="box" href="/create-account-page">Luo käyttäjä </a>
     |
     <a href="/">Etusivulle</a>
   </p>
   {% endif %}
   {% if boolean_rights==True %}
-  <p>Muuta käyttäjän oikeuksia:</p>
+  <p>Muuta toisen käyttäjän oikeuksia:</p>
   <form action="/update" method="POST">
     <input type="radio" name="changes" value="admin">Lisää admin oikeudet <br>
     <input type="radio" name="changes" value="visitor">Vaihda visitor -oikeuksiiin <br>
