@@ -20,15 +20,12 @@ Sovelluksen käynnistäminen:
   - DATABASE_URL=<tietokannan-paikallinen-osoite>
 
   - SECRET_KEY=<salainen-avain>
-    - Salaisen avaimen voi luoda python3 secrectsin avulla:
-      
-
-      - $ python3
-      
-      - $ import secrets
-      
-      - $ secrets.token_hex(16)
-
+    - Salaisen avaimen voi luoda python3 avulla:
+ ```     
+       $ python3
+        >>>import secrets
+        >>>secrets.token_hex(16)
+```
 
 - Asenna virtuaaliympäristö ja sovelluksen riippuvuudetkomennoilla:
   - $ python3 -m venv venv
