@@ -1,32 +1,37 @@
 # Kasvikauppa-sovellus
-Tsoha projektina on suunnitelmissa tehdä ravintolasovellustyyppinen kasvikauppasovellus. 
 
-Sovelluksen nykeinen tila:
+Sovelluksen toiminnallisuus:
 
-- Sisäänkirjautuessa syntyy käyttäjälle istunto
-- Uloskirjautuessa istunto poistuu
-- Sovellukseen voi luoda käyttäjän, jonka käyttäjänimi ja salasana tallentuvat tietokantaan
+- Sovellukseen voi luoda käyttäjän, jonka käyttäjänimi ja salasana tallentuvat tietokantaan, samalla syntyy istunto
 - Admin -käyttäjä voi lisätä sovellukseen uuden kasvin
 - Jokaiselle kasville on oma sivunsa, josta näkee kasvin tietoja
 - Sovelluksessa pystyy kirjautuneena lähettämään palautetta.
--  Kasveja voi hakea tietokannasta eri suodattimilla kuten hinta tai kategoria
--  Admin voi antaa toiselle käyttäjälle admin -oikeudet, poistaa admin -oikeudet tai poistaa käyttäjän
+- Kasveja voi hakea tietokannasta eri suodattimilla kuten hinta tai kategoria
+- Admin voi antaa toiselle käyttäjälle admin -oikeudet, poistaa admin -oikeudet tai poistaa käyttäjän
+- Admin -käyttäjä voi poistaa palautteita
 
-Tavoitteena on vielä:
-- Admin -käyttäjä voi poistaa palautteita tai kasveja
-- tyyli.css tiedoston luonti ja ukoasun parantaminen
 
 Sovelluksen käynnistäminen:
-Koneellesi täytyy luoda tiedosto .env samana kansioon kuin kloonattu repositorio
 
-Sinne tarvitsee:
+- Kloonaa reposition koneellesi. Tämän jälkene luo samaan kansioon .env -niminen tiedosto.
 
-DATABASE_URL=<tietokannan-paikallinen-osoite>
+    .env tiedoston sisällöksi tulee:
 
-SECRET_KEY=<salainen-avain>
+  - DATABASE_URL=<tietokannan-paikallinen-osoite>
 
-Asenna ja aktivoi virtuaaliympäristö komennoilla
+  - SECRET_KEY=<salainen-avain>
+    - Salaisen avaimen voi luoda python3 secrectsin avulla
+
+
+- Asenna virtuaaliympäristö ja sovelluksen riippuvuudetkomennoilla:
   - $ python3 -m venv venv
   - $ source venv/bin/activate
   - $ pip install -r ./requirements.txt
+- Yhdistä Postgresql ja schema.sql komennolla:
+  -  $ psql < schema.sql
+- Lopuksi käynnistä sovellus ajamalla kansiossa:
   - $ flask run
+
+- Admin oikeuksien testaaminen:
+  - luo itsellesi admin salasana python3 avulla
+
