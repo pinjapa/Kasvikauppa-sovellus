@@ -36,6 +36,15 @@ Sovelluksen käynnistäminen:
 - Lopuksi käynnistä sovellus ajamalla kansiossa:
   - $ flask run
 
-- Admin oikeuksien testaaminen:
-  - luo itsellesi admin salasana python3 avulla
-
+Admin oikeuksien testaaminen:
+  - luo itsellesi admin salasana python3 avulla ajamalla komennot:
+ ``` 
+   $ python3
+   >>> from werkzeug.security import generate_password_hash
+   >>> generate_password_hash('tähän haluamasi salasana')
+ ```
+ - kopio salasana ja lisää se tietokantaan:
+ ```
+   $ psql
+   =# INSERT INTO Accounts (username, password, rights) VALUES ('valitsemasi käyttäjänimi', 'kopioimasi salasana', 'admin');
+ ```
