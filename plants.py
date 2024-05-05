@@ -1,6 +1,8 @@
 from db import db
 from sqlalchemy.sql import text
 
+
+#gets all plants from database
 def fetch_plants():
     result = db.session.execute(text("SELECT id, name, price FROM Plants"))
     plants = result.fetchall()
@@ -12,6 +14,8 @@ def fetch_plants():
     
     return (plants, categories, sum)
 
+
+#saves the plant to database
 def save_plant(plant_name, plant_category, plant_price, plant_description, username):
     try:
         result = db.session.execute(text("SELECT id FROM Accounts WHERE username=:username"), {"username" :username})
@@ -32,6 +36,8 @@ def save_plant(plant_name, plant_category, plant_price, plant_description, usern
     except:
         return False
 
+
+#gets the information of wanted plant
 def plantpage(id):
     sql = text("""SELECT P.name, A.username, P.price, D.content, C.name 
                FROM Descriptions D JOIN Plants P ON D.plant_id = P.id
@@ -44,6 +50,8 @@ def plantpage(id):
    
     return all
 
+
+#gets all plants in wanted order
 def filter_by_category(category):
     if category == "all":
         sql = text("""SELECT P.id, P.name, P.price

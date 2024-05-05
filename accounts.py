@@ -7,6 +7,8 @@ import secrets
 
 error_message = "Tapahtui virhe: "
 
+
+#adds user to database
 def create_account(username, password1, password2):
     rights = "visitor"
 
@@ -28,22 +30,26 @@ def create_account(username, password1, password2):
         if password1 == password2:
             hash_value = generate_password_hash(password1)
             try:
-                sql = text("INSERT INTO Accounts (username, password, rights) VALUES (:username, :password, :rights)")
+                sql = text("""INSERT INTO Accounts (username, password, rights)
+                            VALUES (:username, :password, :rights)""")
                 db.session.execute(sql, {"username": username, "password": hash_value, "rights": rights})
                 db.session.commit()
                 session["username"] = username
                 session["csrf_token"] = secrets.token_hex(16)
-                
-                return True #redirect("/login")
+                return True
 
             except:
                 return render_template("error.html", message=error_message + "Käyttäjänimi on jo olemassa!")
-    
+
+
+#checks if username exists   
 def check_username(username):
     sql = text("SELECT id, password FROM Accounts WHERE username=:username")
     result = db.session.execute(sql, {"username":username})
     return result.fetchone()
 
+
+#login fuction
 def login(username, password):
     user = check_username(username)  
     
@@ -59,10 +65,11 @@ def login(username, password):
         else:
             return render_template("error.html", message="käyttäjänimi ja salasana eivät täsmää")
 
+
+#checks if user is admin
 def check_rights():
     try:
         if session["username"]:
-            print("moi")
             username = session["username"]
             sql = text("SELECT rights FROM Accounts WHERE username=:username")
             result = db.session.execute(sql, {"username":username})
@@ -76,6 +83,7 @@ def check_rights():
         return False
 
 
+#checks which changes admin wants to do
 def check_changes(change, username):
     user = check_username(username)
     if not user:
@@ -88,6 +96,8 @@ def check_changes(change, username):
     if change == "delete":
         return delete_account(username)
 
+
+#changes users rights to admin
 def update_rights(username):
     try:
         sql = text("UPDATE Accounts SET rights='admin' WHERE username=:username")
@@ -96,7 +106,9 @@ def update_rights(username):
         return True
     except:
         return False
-    
+
+
+#changes users rights to visitor
 def change_to_visitor(username):
     user = check_username(username)
     if not user:
@@ -109,6 +121,8 @@ def change_to_visitor(username):
     except:
         return False
 
+
+#deletes user from database
 def delete_account(username):
     try:
         sql = text("DELETE FROM Accounts WHERE username=:username")
@@ -117,4 +131,3 @@ def delete_account(username):
         return True
     except:
         return False
-    

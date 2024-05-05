@@ -1,6 +1,5 @@
 from app import app
 from flask import redirect, render_template, request, session, abort, flash
-from sqlalchemy.sql import text
 from os import getenv
 import messages
 import accounts
@@ -9,7 +8,8 @@ import plants
 app.secret_key = getenv("SECRET_KEY")
 error_message = "Tapahtui virhe: "
 
-@app.route("/")         #front page
+#front page
+@app.route("/")         
 def index():
     avg = messages.get_average()
     if not avg:
@@ -17,13 +17,16 @@ def index():
     return render_template("index.html", message="Tervetuloa!", avg=avg)
 
 
-@app.route("/messages") #feedback page
+#feedback page
+@app.route("/messages") 
 def index_messages():
     all_messages = messages.get_messages()
     rights = accounts.check_rights()
     return render_template("index_messages.html",count=len(all_messages), messages=all_messages, rights=rights)
 
-@app.route("/remove-message", methods=["POST"]) #removes a message
+
+#removes a message
+@app.route("/remove-message", methods=["POST"]) 
 def remove_message():
     try:
         content = request.form["remove"]
@@ -36,14 +39,17 @@ def remove_message():
         return redirect("/messages")
 
 
-@app.route("/new_message") #page for new message
+#page for new message
+@app.route("/new_message") 
 def new():
     if "csrf_token" not in session:
         abort(403)
     return render_template("new_message.html")
 
+
+#adds feeback to the table
 @app.route("/send", methods=["POST"]) 
-def send():                 #adds feeback to the table
+def send():                 
     if "csrf_token" not in session:
         abort(403)
     if session["csrf_token"] != request.form["csrf_token"]:
@@ -65,6 +71,7 @@ def send():                 #adds feeback to the table
         return redirect("/new_message")
 
 
+#leads to login page
 @app.route("/login_page")
 def login_page():
     rights = accounts.check_rights()
@@ -76,12 +83,16 @@ def login_page():
         b_rights = False
         rights = 'visitor'
     return render_template("login_page.html", rights=rights, boolean_rights=b_rights)
-       
+
+
+#leads to create-account-page
 @app.route("/create-account-page")
 def create_account_page():
     return render_template("create_account.html")
 
-@app.route("/create-account", methods=["POST"]) #creates an account
+
+#creates an account
+@app.route("/create-account", methods=["POST"]) 
 def create_account(): 
     
     username = request.form["username"]
@@ -95,7 +106,9 @@ def create_account():
         flash("Käyttäjän luonti epäonnistui!", "flash-error")
         return redirect("/login_page")
 
-@app.route("/login", methods=["POST"]) #login
+
+#login function
+@app.route("/login", methods=["POST"]) 
 def login():
 
     username = request.form["username"]
@@ -107,6 +120,8 @@ def login():
     else:
         return result
 
+
+#logout function
 @app.route("/logout") 
 def logout():
     del session["username"]
@@ -114,6 +129,8 @@ def logout():
     flash("Uloskirjautuminen onnistui!", "flash-succeed")
     return redirect("/")
 
+
+#updates users rights
 @app.route("/update", methods=["POST"])
 def update_rights():
     if "csrf_token" not in session:
@@ -138,13 +155,16 @@ def update_rights():
         return redirect("/login_page")
 
 
-@app.route("/all-plants-page")#page where you can see plants
+#page where you can see plants
+@app.route("/all-plants-page")
 def all_plants_page():
     rights = accounts.check_rights()
     result = plants.fetch_plants()
     return render_template("all_plants.html", count=result[2], plants=result[0], rights=rights, categories=result[1])
 
-@app.route("/all-plants", methods=["POST"]) #to filter plants
+
+#to filter plants
+@app.route("/all-plants", methods=["POST"]) 
 def all_plants():
     rights = accounts.check_rights()
     try:
@@ -155,17 +175,20 @@ def all_plants():
     
     except:
         flash("Valitse kategoria tai hinta ensin!", "flash-neutral")
-        return redirect("/all-plants-page")   
-    
+        return redirect("/all-plants-page")     
 
-@app.route("/new_plant") #page to create new plant
+
+#page to create new plant
+@app.route("/new_plant") 
 def new_plant():
     if "csrf_token" not in session:
         abort(403)
     categories = plants.fetch_plants()[1]    
     return render_template("new_plant.html", categories=categories)
 
-@app.route("/save-plant", methods=["POST"]) #saves the plant to databse
+
+#saves the plant to database
+@app.route("/save-plant", methods=["POST"]) 
 def save_plant():
     if "csrf_token" not in session:
         abort(403)
@@ -189,7 +212,9 @@ def save_plant():
         flash("Kasvin lisääminen epäonnistui!", "flash-error")
     return redirect("/all-plants-page")
 
-@app.route("/plant_page/<int:id>") #page for individual plant
+
+#page for individual plant
+@app.route("/plant_page/<int:id>") 
 def plant_page(id):
     result = plants.plantpage(id)
     
